@@ -1,0 +1,2484 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours Complet JavaScript - Formation Développement Web</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #01020e;
+            --secondary: #18056d;
+            --accent: #07385f;
+            --light: #f8f9fa;
+            --dark: #2d3748;
+            --success: #0f032c;
+            --warning: #bdbbf1;
+            --danger: #38356b;
+            --gray: #718096;
+            --light-gray: #e2e8f0;
+            --border-radius: 8px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+   
+
+        .search a {
+            text-decoration: none;
+        }
+
+        .search button {
+            background-color: #54677e; /* Bleu professionnel */
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 10PX;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search button:hover {
+            background-color: #094576; /* Bleu foncé au survol */
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-links li a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links li a:hover {
+            color: var(--accent);
+        }
+        
+
+        /* Main content */
+        main {
+            flex: 1;
+            display: flex;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            gap: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            position: sticky;
+            top: 140px;
+            height: calc(100vh - 160px);
+            overflow-y: auto;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            align-self: flex-start;
+        }
+
+        .sidebar h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--light-gray);
+            color: var(--primary);
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--border-radius);
+            color: var(--dark);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .sidebar a:hover {
+            background-color: var(--light-gray);
+            color: var(--primary);
+        }
+
+        .sidebar a.active {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .sidebar .submenu {
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid var(--light-gray);
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 140px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .section h3 {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+
+        .section h4 {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin: 1.25rem 0 0.75rem;
+        }
+
+        .section p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .section ul, .section ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .section table th {
+            background-color: var(--primary);
+            color: white;
+            text-align: left;
+            padding: 0.75rem 1rem;
+        }
+
+        .section table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .section table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .section table tr:hover {
+            background-color: #edf2f7;
+        }
+
+        .code-block {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            box-shadow: var(--shadow);
+        }
+
+        .code-block code {
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.95rem;
+        }
+
+        .example {
+            background-color: #f0f9ff;
+            border-left: 4px solid var(--accent);
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .example-title {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--secondary);
+        }
+
+        .note {
+            background-color: #fefce8;
+            border-left: 4px solid var(--warning);
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .tip {
+            background-color: #f0fdf4;
+            border-left: 4px solid var(--success);
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .important {
+            background-color: #d4daed;
+            border-left: 4px solid var(--danger);
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .badge-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .badge-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .badge-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .badge-warning {
+            background-color: var(--warning);
+            color: var(--dark);
+        }
+
+        .badge-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2.5rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.25rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            main {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                position: relative;
+                top: 0;
+                height: auto;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .nav-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            
+            .content {
+                padding: 1.5rem;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+            }
+        }
+
+        /* Nouveaux styles pour les badges */
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        /* Animation pour les exemples interactifs */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .interactive-example {
+            background: #f5f7fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #374d71;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .example-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .example-btn {
+            padding: 0.5rem 1rem;
+            background: #2f3f5a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .example-btn:hover {
+            background: #272f40;
+        }
+        
+        .example-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+            min-height: 50px;
+        }
+        
+        /* Styles pour les sections avancées */
+        .advanced-section {
+            background: linear-gradient(to right, #f8fafc, #f0f9ff);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #1f1537;
+        }
+        
+       .advanced-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+.advanced-FLEX{
+    
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        
+}
+        
+        .advanced-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.25rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .advanced-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-icon {
+            font-size: 2rem;
+            color: #2d1b5a;
+            margin-bottom: 1rem;
+        }
+        
+        /* Nouveau style pour les onglets */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 0.5rem 1rem;
+            background: #e2e8f0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            background: #203b66;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+
+        .success {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .loading {
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <h1>Formation JavaScript Professionnel</h1>
+            </div>
+             <div class="search">
+             <a href="se connecter.html">
+        -    <button type="button">Se connecter</button>
+             </a>
+</div>
+
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="#bases"><i class="fas fa-book"></i> Bases de JS</a></li>
+                <li><a href="#fonctions"><i class="fas fa-cogs"></i> Fonctions</a></li>
+                <li><a href="#objets"><i class="fas fa-cube"></i> Objets</a></li>
+                <li><a href="#tableaux"><i class="fas fa-list"></i> Tableaux</a></li>
+                 <li><a href="#avances"><i class="fas fa-rocket"></i> Concepts Avancés</a></li>
+                <li><a href="#dom"><i class="fas fa-code-branch"></i> DOM</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main>
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Sommaire</h2>
+            <ul>
+                <li><a href="#introduction">Introduction à JavaScript</a></li>
+                <li><a href="#bases">Les Bases de JavaScript</a>
+                    <ul class="submenu">
+                        <li><a href="#insertion">Insertion du JavaScript</a></li>
+                        <li><a href="#commentaires">Commentaires</a></li>
+                        <li><a href="#affichage">Affichage</a></li>
+                        <li><a href="#types">Types de données</a></li>
+                        <li><a href="#variables">Variables</a></li>
+                    </ul>
+                </li>
+                <li><a href="#operateurs">Opérateurs</a>
+                    <ul class="submenu">
+                        <li><a href="#arithmetiques">Arithmétiques</a></li>
+                        <li><a href="#comparaison">Comparaison</a></li>
+                        <li><a href="#logiques">Logiques</a></li>
+                        <li><a href="#ternaire">Ternaire</a></li>
+                    </ul>
+                </li>
+                <li><a href="#controle">Structures de Contrôle</a>
+                    <ul class="submenu">
+                        <li><a href="#conditions">Conditions</a></li>
+                        <li><a href="#boucles">Boucles</a></li>
+                        <li><a href="#gabarits">Littéraux de Gabarits</a></li>
+                    </ul>
+                </li>
+                <li><a href="#fonctions">Fonctions</a>
+                    <ul class="submenu">
+                        <li><a href="#declaration">Déclaration</a></li>
+                        <li><a href="#expression">Expression</a></li>
+                        <li><a href="#flechee">Fléchée</a></li>
+                        <li><a href="#anonymes">Anonymes</a></li>
+                    </ul>
+                </li>
+                <li><a href="#objets">Objets</a>
+                    <ul class="submenu">
+                        <li><a href="#creation">Création</a></li>
+                        <li><a href="#constructeur">Constructeur</a></li>
+                        <li><a href="#classes">Classes</a></li>
+                        <li><a href="#heritage">Héritage</a></li>
+                    </ul>
+                </li>
+                <li><a href="#tableaux">Tableaux</a>
+                    <ul class="submenu">
+                        <li><a href="#declaration-tableau">Déclaration</a></li>
+                        <li><a href="#parcours">Parcours</a></li>
+                        <li><a href="#modification">Modification</a></li>
+                        <li><a href="#methodes">Méthodes Utiles</a></li>
+                    </ul>
+                </li>
+                <li><a href="#avances">Concepts Avancés</a>
+                    <ul class="submenu">
+                        <li><a href="#es6">Fonctionnalités ES6+</a></li>
+                        <li><a href="#async">Programmation Asynchrone</a></li>
+                        <li><a href="#modules">Modules JavaScript</a></li>
+                        <li><a href="#erreurs">Gestion des Erreurs</a></li>
+                        <li><a href="#poo">POO Avancée</a></li>
+                        <li><a href="#donnees">Manipulation de Données</a></li>
+                        <li><a href="#outils">Outils & Bonnes Pratiques</a></li>
+                        <li><a href="#frameworks">Frameworks & Bibliothèques</a></li>
+                        <li><a href="#projets">Projets Pratiques</a></li>
+                    </ul>
+                </li>
+                <li><a href="#regex">Expressions Régulières</a></li>
+                <li><a href="#dom">Manipulation du DOM</a></li>
+                <li><a href="#formulaires">Formulaires</a></li>
+                <li><a href="#bonnes-pratiques">Bonnes Pratiques</a></li>
+            </ul>
+        </aside>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Introduction -->
+            <section id="introduction" class="section">
+                <h2>Introduction à JavaScript</h2>
+                <p>JavaScript est un langage de programmation de scripts principalement employé dans les pages web interactives et à ce titre est une partie essentielle des applications web. Avec les technologies HTML et CSS, JavaScript est au cœur des langages utilisés par les développeurs web.</p>
+                
+                <div class="note">
+                    <p><strong>Note :</strong> JavaScript est souvent abrégé en "JS". Il ne doit pas être confondu avec Java, un autre langage de programmation.</p>
+                </div>
+                
+                <h3>Pourquoi apprendre JavaScript ?</h3>
+                <ul>
+                    <li>Créer des sites web interactifs et dynamiques</li>
+                    <li>Développer des applications web complètes (frontend et backend avec Node.js)</li>
+                    <li>Construire des applications mobiles (avec React Native, Ionic, etc.)</li>
+                    <li>Développer des jeux vidéo dans le navigateur</li>
+                    <li>Automatiser des tâches répétitives</li>
+                </ul>
+            </section>
+
+            <!-- Les Bases de JavaScript -->
+            <section id="bases" class="section">
+                <h2>Les Bases de JavaScript</h2>
+                
+                <div id="insertion">
+                    <h3>1. Insertion du JavaScript</h3>
+                    <p>Il existe plusieurs façons d'insérer du JavaScript dans une page HTML :</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-html">&lt;!-- Dans une balise HTML --&gt;
+&lt;button onclick="alert('Bonjour !')"&gt;Cliquez-moi&lt;/button&gt;
+
+&lt;!-- Dans un élément &lt;script&gt; --&gt;
+&lt;script&gt;
+  console.log("Ce code s'exécute immédiatement");
+&lt;/script&gt;
+
+&lt;!-- Dans un fichier .js externe --&gt;
+&lt;script src="script.js"&gt;&lt;/script&gt;</code></pre>
+                    </div>
+                </div>
+                
+                <div id="commentaires">
+                    <h3>2. Commentaires</h3>
+                    <div class="code-block">
+                        <pre><code class="language-javascript">// Commentaire sur une ligne
+
+/* Commentaire
+   sur plusieurs lignes */</code></pre>
+                    </div>
+                </div>
+                
+                <div id="affichage">
+                    <h3>3. Affichage</h3>
+                    <p>JavaScript propose plusieurs méthodes pour afficher des informations :</p>
+                    
+                    <div class="example">
+                        <div class="example-title">Exemples :</div>
+                        <div class="code-block">
+                            <pre><code class="language-javascript">alert("Ceci est une boîte d'alerte");
+const nom = prompt("Quel est votre nom ?");
+const confirmer = confirm("Êtes-vous sûr ?");
+console.log("Message dans la console");
+document.write("Écrit dans le document");</code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="types">
+                    <h3>4. Types de données</h3>
+                    <p>JavaScript a plusieurs types de données primitifs :</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Exemple</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>String</td>
+                                <td>Chaîne de caractères</td>
+                                <td>"Bonjour"</td>
+                            </tr>
+                            <tr>
+                                <td>Number</td>
+                                <td>Nombre (entier ou décimal)</td>
+                                <td>42, 3.14</td>
+                            </tr>
+                            <tr>
+                                <td>Boolean</td>
+                                <td>Valeur logique (vrai/faux)</td>
+                                <td>true, false</td>
+                            </tr>
+                            <tr>
+                                <td>Null</td>
+                                <td>Valeur nulle intentionnelle</td>
+                                <td>null</td>
+                            </tr>
+                            <tr>
+                                <td>Undefined</td>
+                                <td>Variable non définie</td>
+                                <td>undefined</td>
+                            </tr>
+                            <tr>
+                                <td>BigInt</td>
+                                <td>Entiers de grande taille</td>
+                                <td>123456789012345678901234567890n</td>
+                            </tr>
+                            <tr>
+                                <td>Symbol</td>
+                                <td>Valeur unique et immuable</td>
+                                <td>Symbol('id')</td>
+                            </tr>
+                            <tr>
+                                <td>Object</td>
+                                <td>Structure de données complexe</td>
+                                <td>{nom: "Jean", age: 30}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="tip">
+                        <p><strong>Astuce :</strong> Utilisez <code>typeof</code> pour connaître le type d'une variable :</p>
+                        <div class="code-block">
+                            <pre><code class="language-javascript">console.log(typeof "Bonjour"); // "string"
+console.log(typeof 42);        // "number"
+console.log(typeof true);      // "boolean"</code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="variables">
+                    <h3>5. Déclaration de variables</h3>
+                    <p>Il existe trois mots-clés pour déclarer des variables :</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">// let : variable modifiable
+let x = 5;
+x = 10;
+
+// const : constante non modifiable
+const PI = 3.14;
+// PI = 3.1415; // Erreur !
+
+// var : ancienne déclaration (à éviter)
+var y = 10;</code></pre>
+                    </div>
+                    
+                    <div class="important">
+                        <p><strong>Important :</strong> Préférez <code>const</code> par défaut, et utilisez <code>let</code> uniquement si la variable doit changer de valeur. Évitez <code>var</code> qui a des problèmes de scope.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Opérateurs -->
+            <section id="operateurs" class="section">
+                <h2>Opérateurs en JavaScript</h2>
+                
+                <div id="arithmetiques">
+                    <h3>Opérateurs arithmétiques</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Opérateur</th>
+                                <th>Description</th>
+                                <th>Exemple</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>+</td>
+                                <td>Addition</td>
+                                <td>5 + 3 → 8</td>
+                            </tr>
+                            <tr>
+                                <td>-</td>
+                                <td>Soustraction</td>
+                                <td>10 - 4 → 6</td>
+                            </tr>
+                            <tr>
+                                <td>*</td>
+                                <td>Multiplication</td>
+                                <td>3 * 4 → 12</td>
+                            </tr>
+                            <tr>
+                                <td>/</td>
+                                <td>Division</td>
+                                <td>10 / 2 → 5</td>
+                            </tr>
+                            <tr>
+                                <td>%</td>
+                                <td>Modulo (reste)</td>
+                                <td>10 % 3 → 1</td>
+                            </tr>
+                            <tr>
+                                <td>**</td>
+                                <td>Exponentiation</td>
+                                <td>2 ** 3 → 8</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="comparaison">
+                    <h3>Opérateurs de comparaison</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Opérateur</th>
+                                <th>Description</th>
+                                <th>Exemple</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>==</td>
+                                <td>Égalité (valeur)</td>
+                                <td>5 == '5' → true</td>
+                            </tr>
+                            <tr>
+                                <td>===</td>
+                                <td>Égalité stricte (valeur + type)</td>
+                                <td>5 === '5' → false</td>
+                            </tr>
+                            <tr>
+                                <td>!=</td>
+                                <td>Inégalité</td>
+                                <td>5 != 3 → true</td>
+                            </tr>
+                            <tr>
+                                <td>!==</td>
+                                <td>Inégalité stricte</td>
+                                <td>5 !== '5' → true</td>
+                            </tr>
+                            <tr>
+                                <td>&gt;</td>
+                                <td>Supérieur à</td>
+                                <td>10 &gt; 5 → true</td>
+                            </tr>
+                            <tr>
+                                <td>&lt;</td>
+                                <td>Inférieur à</td>
+                                <td>10 &lt; 5 → false</td>
+                            </tr>
+                            <tr>
+                                <td>&gt;=</td>
+                                <td>Supérieur ou égal</td>
+                                <td>10 &gt;= 10 → true</td>
+                            </tr>
+                            <tr>
+                                <td>&lt;=</td>
+                                <td>Inférieur ou égal</td>
+                                <td>5 &lt;= 10 → true</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="logiques">
+                    <h3>Opérateurs logiques</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Opérateur</th>
+                                <th>Description</th>
+                                <th>Exemple</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>&&</td>
+                                <td>ET logique</td>
+                                <td>true && false → false</td>
+                            </tr>
+                            <tr>
+                                <td>||</td>
+                                <td>OU logique</td>
+                                <td>true || false → true</td>
+                            </tr>
+                            <tr>
+                                <td>!</td>
+                                <td>NON logique</td>
+                                <td>!true → false</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="ternaire">
+                    <h3>Opérateur ternaire</h3>
+                    <p>L'opérateur ternaire permet de faire une condition en une ligne :</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">const age = 20;
+const statut = age >= 18 ? "Majeur" : "Mineur";
+console.log(statut); // "Majeur"</code></pre>
+                    </div>
+                    
+                    <div class="tip">
+                        <p><strong>Astuce :</strong> L'opérateur ternaire est très utile pour des conditions simples, mais peut devenir difficile à lire pour des cas complexes.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Structures de contrôle -->
+            <section id="controle" class="section">
+                <h2>Structures de Contrôle</h2>
+                
+                <div id="conditions">
+                    <h3>Conditions</h3>
+                    <p>Les structures conditionnelles permettent d'exécuter du code en fonction de conditions.</p>
+                    
+                    <h4>if...else</h4>
+                    <div class="code-block">
+                        <pre><code class="language-javascript">const heure = new Date().getHours();
+let message;
+
+if (heure < 12) {
+  message = "Bon matin !";
+} else if (heure < 18) {
+  message = "Bon après-midi !";
+} else {
+  message = "Bonsoir !";
+}
+
+console.log(message);</code></pre>
+                    </div>
+                    
+                    <h4>switch</h4>
+                    <div class="code-block">
+                        <pre><code class="language-javascript">const jour = "Lundi";
+let type;
+
+switch(jour) {
+  case "Lundi":
+  case "Mardi":
+  case "Mercredi":
+  case "Jeudi":
+  case "Vendredi":
+    type = "Jour de semaine";
+    break;
+  case "Samedi":
+  case "Dimanche":
+    type = "Weekend";
+    break;
+  default:
+    type = "Jour inconnu";
+}
+
+console.log(type);</code></pre>
+                    </div>
+                </div>
+                
+                <div id="boucles">
+                    <h3>Boucles</h3>
+                    <p>Les boucles permettent de répéter des instructions plusieurs fois.</p>
+                    
+                    <h4>for</h4>
+                    <div class="code-block">
+                        <pre><code class="language-javascript">// Boucle for classique
+for (let i = 0; i < 5; i++) {
+  console.log(i); // 0, 1, 2, 3, 4
+}</code></pre>
+                    </div>
+                    
+                    <h4>for...of</h4>
+                    <div class="code-block">
+                        <pre><code class="language-javascript">// Boucle sur les éléments d'un tableau
+const fruits = ["Pomme", "Banane", "Orange"];
+
+for (const fruit of fruits) {
+  console.log(fruit); // Pomme, Banane, Orange
+}</code></pre>
+                    </div>
+                    
+                    <h4>while</h4>
+                    <div class="code-block">
+                        <pre><code class="language-javascript">// Boucle while
+let i = 0;
+while (i < 3) {
+  console.log(i); // 0, 1, 2
+  i++;
+}</code></pre>
+                    </div>
+                </div>
+                
+                <div id="gabarits">
+                    <h3>Littéraux de Gabarits</h3>
+                    <p>Les littéraux de gabarits permettent d'intégrer des expressions dans des chaînes de caractères.</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">const nom = "Alice";
+const age = 30;
+
+// Avec concaténation classique
+console.log("Bonjour " + nom + ", vous avez " + age + " ans.");
+
+// Avec littéraux de gabarits
+console.log(`Bonjour ${nom}, vous avez ${age} ans.`);</code></pre>
+                    </div>
+                    
+                    <div class="tip">
+                        <p><strong>Astuce :</strong> Les littéraux de gabarits permettent aussi des chaînes multi-lignes sans utiliser <code>\n</code>.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Fonctions -->
+            <section id="fonctions" class="section">
+                <h2>Fonctions en JavaScript</h2>
+                
+                <div id="declaration">
+                    <h3>Déclaration de fonction</h3>
+                    <p>La manière classique de définir une fonction :</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">function saluer(nom) {
+  return `Bonjour, ${nom} !`;
+}
+
+console.log(saluer("Jean")); // Bonjour, Jean !</code></pre>
+                    </div>
+                </div>
+                
+                <div id="expression">
+                    <h3>Expression de fonction</h3>
+                    <p>Les fonctions peuvent être assignées à des variables :</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">const multiplier = function(a, b) {
+  return a * b;
+};
+
+console.log(multiplier(4, 5)); // 20</code></pre>
+                    </div>
+                </div>
+                
+                <div id="flechee">
+                    <h3>Fonctions fléchées</h3>
+                    <p>Syntaxe concise introduite avec ES6 :</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">// Syntaxe complète
+const addition = (a, b) => {
+  return a + b;
+};
+
+// Syntaxe concise (une seule expression)
+const addition2 = (a, b) => a + b;
+
+// Sans paramètres
+const direBonjour = () => "Bonjour !";
+
+// Un seul paramètre
+const carre = x => x * x;</code></pre>
+                    </div>
+                    
+                    <div class="note">
+                        <p><strong>Note :</strong> Les fonctions fléchées n'ont pas leur propre <code>this</code>, elles utilisent le <code>this</code> du contexte dans lequel elles sont définies.</p>
+                    </div>
+                </div>
+                
+                <div id="anonymes">
+                    <h3>Fonctions anonymes</h3>
+                    <p>Fonctions sans nom, souvent utilisées comme arguments :</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">// Fonction anonyme comme callback
+const nombres = [1, 2, 3];
+const carres = nombres.map(function(n) {
+  return n * n;
+});
+console.log(carres); // [1, 4, 9]
+
+// Fonction fléchée anonyme
+const carres2 = nombres.map(n => n * n);</code></pre>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Objets -->
+            <section id="objets" class="section">
+                <h2>Objets en JavaScript</h2>
+                
+                <div id="creation">
+                    <h3>Création d'objets</h3>
+                    <p>Il existe plusieurs façons de créer des objets :</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">// Notation littérale
+const personne = {
+  nom: "Alice",
+  age: 30,
+  saluer: function() {
+    return `Bonjour, je m'appelle ${this.nom}`;
+  }
+};
+
+// Accès aux propriétés
+console.log(personne.nom); // Alice
+console.log(personne["age"]); // 30
+console.log(personne.saluer()); // Bonjour, je m'appelle Alice</code></pre>
+                    </div>
+                </div>
+                
+                <div id="constructeur">
+                    <h3>Fonction constructeur</h3>
+                    <p>Création d'objets avec une fonction constructeur :</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">function Voiture(marque, modele, annee) {
+  this.marque = marque;
+  this.modele = modele;
+  this.annee = annee;
+  
+  this.description = function() {
+    return `${this.marque} ${this.modele} (${this.annee})`;
+  };
+}
+
+const maVoiture = new Voiture("Toyota", "Corolla", 2020);
+console.log(maVoiture.description()); // Toyota Corolla (2020)</code></pre>
+                    </div>
+                </div>
+                
+                <div id="classes">
+                    <h3>Classes (ES6)</h3>
+                    <p>Syntaxe moderne pour créer des objets :</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">class Animal {
+  constructor(nom, espece) {
+    this.nom = nom;
+    this.espece = espece;
+  }
+  
+  parler() {
+    return `${this.nom} fait un bruit.`;
+  }
+}
+
+const chien = new Animal("Rex", "Chien");
+console.log(chien.parler()); // Rex fait un bruit.</code></pre>
+                    </div>
+                </div>
+                
+                <div id="heritage">
+                    <h3>Héritage</h3>
+                    <p>Création de classes qui héritent d'autres classes :</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">class Chien extends Animal {
+  constructor(nom, race) {
+    super(nom, "Chien");
+    this.race = race;
+  }
+  
+  parler() {
+    return `${this.nom} aboie : Wouf Wouf!`;
+  }
+  
+  description() {
+    return `${this.nom} est un ${this.race}`;
+  }
+}
+
+const berger = new Chien("Max", "Berger Allemand");
+console.log(berger.parler()); // Max aboie : Wouf Wouf!
+console.log(berger.description()); // Max est un Berger Allemand</code></pre>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Tableaux -->
+            <section id="tableaux" class="section">
+                <h2>Tableaux en JavaScript</h2>
+                
+                <div id="declaration-tableau">
+                    <h3>Déclaration et accès</h3>
+                    <p>Création et manipulation de tableaux :</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">// Création d'un tableau
+const fruits = ["Pomme", "Banane", "Orange"];
+
+// Accès aux éléments
+console.log(fruits[0]); // Pomme
+console.log(fruits.length); // 3
+
+// Modification d'un élément
+fruits[1] = "Kiwi";
+console.log(fruits); // ["Pomme", "Kiwi", "Orange"]</code></pre>
+                    </div>
+                </div>
+                
+                <div id="parcours">
+                    <h3>Parcours de tableau</h3>
+                    <p>Différentes façons de parcourir un tableau :</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">const nombres = [1, 2, 3, 4, 5];
+
+// Boucle for classique
+for (let i = 0; i < nombres.length; i++) {
+  console.log(nombres[i]);
+}
+
+// for...of
+for (const nombre of nombres) {
+  console.log(nombre);
+}
+
+// forEach
+nombres.forEach(function(nombre) {
+  console.log(nombre);
+});
+
+// forEach avec fonction fléchée
+nombres.forEach(nombre => console.log(nombre));</code></pre>
+                    </div>
+                </div>
+                
+                <div id="modification">
+                    <h3>Modification de tableau</h3>
+                    <p>Ajout et suppression d'éléments :</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">const tableau = [1, 2, 3];
+
+// Ajout en fin de tableau
+tableau.push(4); // [1, 2, 3, 4]
+
+// Suppression du dernier élément
+tableau.pop(); // [1, 2, 3]
+
+// Ajout en début de tableau
+tableau.unshift(0); // [0, 1, 2, 3]
+
+// Suppression du premier élément
+tableau.shift(); // [1, 2, 3]
+
+// Ajout/suppression à une position spécifique
+tableau.splice(1, 0, 1.5); // [1, 1.5, 2, 3]
+tableau.splice(2, 1); // [1, 1.5, 3]</code></pre>
+                    </div>
+                </div>
+                
+                <div id="methodes">
+                    <h3>Méthodes utiles</h3>
+                    <p>Les tableaux disposent de nombreuses méthodes pratiques :</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">const nombres = [1, 2, 3, 4, 5];
+
+// map : transformation
+const carres = nombres.map(n => n * n); // [1, 4, 9, 16, 25]
+
+// filter : filtrage
+const pairs = nombres.filter(n => n % 2 === 0); // [2, 4]
+
+// reduce : réduction
+const somme = nombres.reduce((acc, n) => acc + n, 0); // 15
+
+// find : recherche
+const premierSup3 = nombres.find(n => n > 3); // 4
+
+// sort : tri
+const nonTries = [3, 1, 4, 2];
+nonTries.sort(); // [1, 2, 3, 4]
+
+// slice : extraction
+const sousTableau = nombres.slice(1, 3); // [2, 3]</code></pre>
+                    </div>
+                    
+                    <div class="tip">
+                        <p><strong>Astuce :</strong> Combinez ces méthodes pour des transformations complexes :</p>
+                        <div class="code-block">
+                            <pre><code class="language-javascript">const produits = [
+  {nom: "Ordinateur", prix: 1000},
+  {nom: "Téléphone", prix: 500},
+  {nom: "Tablette", prix: 300}
+];
+
+// Prix total des produits de plus de 400€
+const total = produits
+  .filter(p => p.prix > 400)
+  .map(p => p.prix)
+  .reduce((acc, prix) => acc + prix, 0); // 1500</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Concepts Avancés -->
+            <section id="avances" class="section">
+                <h2>Concepts Avancés en JavaScript</h2>
+                <p>Découvrez les fonctionnalités modernes et les concepts avancés qui font de JavaScript un langage puissant pour le développement web moderne.</p>
+                
+                <div class="badge-container">
+                    <span class="badge badge-primary">ES6+</span>
+                    <span class="badge badge-secondary">Asynchrone</span>
+                    <span class="badge badge-success">POO</span>
+                    <span class="badge badge-warning">Modules</span>
+                    <span class="badge badge-danger">APIs</span>
+                </div>
+                
+                <div id="es6" class="advanced-section">
+                    <h3><i class="fas fa-bolt"></i> Fonctionnalités ES6+</h3>
+                    <p>ES6 (ECMAScript 2015) a introduit des fonctionnalités révolutionnaires qui ont transformé JavaScript.</p>
+                    
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="arrow">Fonctions fléchées</button>
+                        <button class="tab-btn" data-tab="destructuring">Destructuring</button>
+                        <button class="tab-btn" data-tab="spread">Spread/Rest</button>
+                        <button class="tab-btn" data-tab="template">Template Literals</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="arrow-content">
+                        <div class="code-block">
+                            <pre><code class="language-javascript">// Fonction classique
+function add(a, b) {
+    return a + b;
+}
+
+// Fonction fléchée
+const addArrow = (a, b) => a + b;
+
+// Avec un seul paramètre
+const square = x => x * x;
+
+// Sans paramètres
+const sayHello = () => 'Hello!';
+
+// Attention au contexte de 'this'
+const person = {
+    name: 'Alice',
+    traditional: function() {
+        console.log(this.name); // 'Alice'
+    },
+    arrow: () => {
+        console.log(this.name); // undefined (this lexical)
+    }
+};</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="destructuring-content">
+                        <div class="code-block">
+                            <pre><code class="language-javascript">// Destructuring d'objet
+const user = { name: 'John', age: 30, email: 'john@example.com' };
+const { name, age } = user;
+console.log(name, age); // John 30
+
+// Destructuring de tableau
+const numbers = [1, 2, 3, 4, 5];
+const [first, second, ...rest] = numbers;
+console.log(first, second, rest); // 1 2 [3,4,5]
+
+// Destructuring de paramètres
+function displayUser({ name, age }) {
+    console.log(`${name} a ${age} ans`);
+}
+displayUser(user); // John a 30 ans</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="spread-content">
+                        <div class="code-block">
+                            <pre><code class="language-javascript">// Spread pour les tableaux
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+const combined = [...arr1, ...arr2]; // [1,2,3,4,5,6]
+
+// Spread pour les objets
+const obj1 = { a: 1, b: 2 };
+const obj2 = { c: 3, d: 4 };
+const merged = { ...obj1, ...obj2 }; // {a:1, b:2, c:3, d:4}
+
+// Rest pour les paramètres
+function sum(...numbers) {
+    return numbers.reduce((acc, num) => acc + num, 0);
+}
+console.log(sum(1, 2, 3, 4)); // 10</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="template-content">
+                        <div class="code-block">
+                            <pre><code class="language-javascript">const name = 'Alice';
+const age = 30;
+
+// Chaîne traditionnelle
+console.log('Bonjour ' + name + ', vous avez ' + age + ' ans.');
+
+// Template literals
+console.log(`Bonjour ${name}, vous avez ${age} ans.`);
+
+// Expressions complexes
+console.log(`Dans 5 ans, vous aurez ${age + 5} ans.`);
+
+// Multi-lignes
+const html = `
+&lt;div class="user-card"&gt;
+    &lt;h2&gt;${name}&lt;/h2&gt;
+    &lt;p&gt;Âge: ${age} ans&lt;/p&gt;
+&lt;/div&gt;
+`;</code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="async" class="advanced-section">
+                    <h3><i class="fas fa-sync-alt"></i> Programmation Asynchrone</h3>
+                    <p>JavaScript utilise des modèles asynchrones pour gérer les opérations longues sans bloquer l'exécution.</p>
+                    
+                    <div class="advanced-grid">
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fas fa-hourglass-half"></i></div>
+                            <h4>Callbacks</h4>
+                            <p>Fonctions passées en argument, exécutées après une opération.</p>
+                            <div class="code-block">
+                                <pre><code class="language-javascript">function fetchData(callback) {
+    setTimeout(() => {
+        callback('Données reçues');
+    }, 1000);
+}
+
+fetchData(data => {
+    console.log(data); // Après 1s
+});</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fas fa-check-circle"></i></div>
+                            <h4>Promesses</h4>
+                            <p>Objets représentant une opération asynchrone et son résultat.</p>
+                            <div class="code-block">
+                                <pre><code class="language-javascript">function fetchData() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('Données reçues');
+            // ou reject('Erreur');
+        }, 1000);
+    });
+}
+
+fetchData()
+    .then(data => console.log(data))
+    .catch(err => console.error(err));</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fas fa-bolt"></i></div>
+                            <h4>Async/Await</h4>
+                            <p>Syntaxe moderne pour écrire du code asynchrone de manière synchrone.</p>
+                            <div class="code-block">
+                                <pre><code class="language-javascript">async function getData() {
+    try {
+        const response = await fetch('https://api.example.com/data');
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.error('Erreur:', error);
+    }
+}
+
+getData();</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-example">
+                        <h4>Exemple: Gestion de requêtes asynchrones</h4>
+                        <div class="example-controls">
+                            <button class="example-btn" id="fetchUsersBtn">Charger utilisateurs</button>
+                            <button class="example-btn" id="simulateErrorBtn">Simuler erreur</button>
+                        </div>
+                        <div class="example-result" id="asyncResult"></div>
+                    </div>
+                </div>
+                
+                <div id="modules" class="advanced-section">
+                    <h3><i class="fas fa-puzzle-piece"></i> Modules JavaScript</h3>
+                    <p>Les modules permettent d'organiser le code en fichiers séparés et réutilisables.</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">// 📁 math.js
+export const PI = 3.14159;
+
+export function add(a, b) {
+    return a + b;
+}
+
+export default function multiply(a, b) {
+    return a * b;
+}
+
+// 📁 main.js
+import multiply, { PI, add } from './math.js';
+
+console.log(PI); // 3.14159
+console.log(add(2, 3)); // 5
+console.log(multiply(2, 3)); // 6</code></pre>
+                    </div>
+                    
+                    <div class="tip">
+                        <p><strong>Bonnes pratiques :</strong></p>
+                        <ul>
+                            <li>Organisez votre code en modules logiques (utils, components, services)</li>
+                            <li>Utilisez les exportations nommées pour plusieurs fonctions/variables</li>
+                            <li>Utilisez l'exportation par défaut pour le composant principal d'un module</li>
+                            <li>Évitez les effets de bord lors de l'importation</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div id="erreurs" class="advanced-section">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Gestion des Erreurs</h3>
+                    <p>Une bonne gestion des erreurs est essentielle pour créer des applications robustes.</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-javascript">// Bloc try/catch
+try {
+    // Code potentiellement problématique
+    const data = JSON.parse(invalidJson);
+} catch (error) {
+    console.error('Erreur de parsing:', error.message);
+} finally {
+    console.log('Exécuté dans tous les cas');
+}
+
+// Erreurs personnalisées
+class ValidationError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'ValidationError';
+    }
+}
+
+function validateUser(user) {
+    if (!user.name) {
+        throw new ValidationError('Le nom est requis');
+    }
+}
+
+// Gestion dans les promesses
+fetch('https://api.example.com/data')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erreur réseau');
+        }
+        return response.json();
+    })
+    .catch(error => {
+        console.error('Échec de la requête:', error);
+    });</code></pre>
+                    </div>
+                </div>
+                
+                <div id="poo" class="advanced-section">
+                    <h3><i class="fas fa-shapes"></i> POO Avancée</h3>
+                    <p>JavaScript utilise un modèle orienté objet basé sur les prototypes.</p>
+                    
+                    <div class="advanced-grid">
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fas fa-link"></i></div>
+                            <h4>Prototypes</h4>
+                            <p>Tous les objets JavaScript héritent de prototypes.</p>
+                            <div class="code-block">
+                                <pre><code class="language-javascript">function Person(name) {
+    this.name = name;
+}
+
+Person.prototype.greet = function() {
+    return `Bonjour, je suis ${this.name}`;
+};
+
+const alice = new Person('Alice');
+console.log(alice.greet()); // Bonjour, je suis Alice</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fas fa-project-diagram"></i></div>
+                            <h4>Héritage</h4>
+                            <p>Créez des hiérarchies de classes avec extends et super.</p>
+                            <div class="code-block">
+                                <pre><code class="language-javascript">class Animal {
+    constructor(name) {
+        this.name = name;
+    }
+    
+    speak() {
+        return `${this.name} émet un son`;
+    }
+}
+
+class Dog extends Animal {
+    constructor(name, breed) {
+        super(name);
+        this.breed = breed;
+    }
+    
+    speak() {
+        return `${super.speak()} : Wouf Wouf!`;
+    }
+}
+
+const rex = new Dog('Rex', 'Berger');
+console.log(rex.speak()); // Rex émet un son : Wouf Wouf!</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fas fa-lock"></i></div>
+                            <h4>Encapsulation</h4>
+                            <p>Contrôlez l'accès aux propriétés avec les champs privés.</p>
+                            <div class="code-block">
+                                <pre><code class="language-javascript">class Counter {
+    #count = 0; // Champ privé
+    
+    increment() {
+        this.#count++;
+    }
+    
+    getCount() {
+        return this.#count;
+    }
+}
+
+const counter = new Counter();
+counter.increment();
+console.log(counter.getCount()); // 1
+console.log(counter.#count); // Erreur: Champ privé</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="donnees" class="advanced-section">
+                    <h3><i class="fas fa-database"></i> Manipulation de Données</h3>
+                    <p>JavaScript offre de puissants outils pour travailler avec des données.</p>
+                    
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="json">JSON</button>
+                        <button class="tab-btn" data-tab="api">APIs</button>
+                        <button class="tab-btn" data-tab="storage">Stockage</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="json-content">
+                        <div class="code-block">
+                            <pre><code class="language-javascript">// Objet JavaScript
+const person = {
+    name: "Alice",
+    age: 30,
+    hobbies: ["lecture", "voyage"]
+};
+
+// Convertir en JSON
+const json = JSON.stringify(person);
+console.log(json); // {"name":"Alice","age":30,"hobbies":["lecture","voyage"]}
+
+// Convertir JSON en objet
+const parsed = JSON.parse(json);
+console.log(parsed.name); // Alice
+
+// Utilisation courante
+localStorage.setItem('user', json);
+const userData = JSON.parse(localStorage.getItem('user'));</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="api-content">
+                        <div class="code-block">
+                            <pre><code class="language-javascript">// Récupérer des données d'une API
+async function fetchPosts() {
+    try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+        if (!response.ok) {
+            throw new Error('Échec de la requête');
+        }
+        const posts = await response.json();
+        return posts;
+    } catch (error) {
+        console.error('Erreur:', error);
+        return [];
+    }
+}
+
+// Envoyer des données
+async function createPost(title, body) {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ title, body })
+    });
+    return response.json();
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="storage-content">
+                        <div class="code-block">
+                            <pre><code class="language-javascript">// localStorage - persistant
+localStorage.setItem('theme', 'dark');
+console.log(localStorage.getItem('theme')); // dark
+localStorage.removeItem('theme');
+
+// sessionStorage - durée de session
+sessionStorage.setItem('sessionToken', 'abc123');
+
+// Cookies
+document.cookie = "username=John; expires=Thu, 18 Dec 2025 12:00:00 UTC; path=/";
+document.cookie = "theme=light; expires=Thu, 18 Dec 2025 12:00:00 UTC; path=/";
+
+// Lire un cookie spécifique
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+console.log(getCookie('username')); // John</code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="outils" class="advanced-section">
+                    <h3><i class="fas fa-tools"></i> Outils & Bonnes Pratiques</h3>
+                    
+                    <div class="advanced-FLEX">
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fas fa-bug"></i></div>
+                            <h4>Debugging</h4>
+                            <ul>
+                                <li>Utilisez <code>console.log()</code>, <code>console.table()</code></li>
+                                <li>Points d'arrêt dans les DevTools</li>
+                                <li>Analyseur de performance</li>
+                                <li>Outil de mise en réseau</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fas fa-vial"></i></div>
+                            <h4>Testing</h4>
+                            <ul>
+                                <li>Jest: Framework de test complet</li>
+                                <li>Mocha + Chai: Combinaison flexible</li>
+                                <li>Cypress: Tests E2E</li>
+                                <li>Testing Library: Tests centrés sur l'utilisateur</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            <h4>Performance</h4>
+                            <ul>
+                                <li>Minification et compression</li>
+                                <li>Chargement paresseux</li>
+                                <li>Mémoization</li>
+                                <li>Debounce/Throttle</li>
+                                <li>Virtualisation des listes</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fas fa-broom"></i></div>
+                            <h4>Clean Code</h4>
+                            <ul>
+                                <li>Noms significatifs</li>
+                                <li>Fonctions courtes et ciblées</li>
+                                <li>Éviter les effets de bord</li>
+                                <li>Commentaires utiles</li>
+                                <li>Formatage cohérent (ESLint, Prettier)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="frameworks" class="advanced-section">
+                    <h3><i class="fas fa-cubes"></i> Frameworks & Bibliothèques</h3>
+                    
+                    <div class="advanced-FLEX">
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fab fa-react"></i></div>
+                            <h4>React</h4>
+                            <ul>
+                                <li>Composants réutilisables</li>
+                                <li>JSX: HTML dans JavaScript</li>
+                                <li>Hooks: useState, useEffect, etc.</li>
+                                <li>Écosystème riche (Redux, React Router)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fab fa-vuejs"></i></div>
+                            <h4>Vue.js</h4>
+                            <ul>
+                                <li>Approche progressive</li>
+                                <li>Syntaxe de template intuitive</li>
+                                <li>Réactivité automatique</li>
+                                <li>Composition API</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fab fa-angular"></i></div>
+                            <h4>Angular</h4>
+                            <ul>
+                                <li>Framework complet</li>
+                                <li>TypeScript par défaut</li>
+                                <li>Injection de dépendances</li>
+                                <li>RxJS pour la programmation réactive</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fab fa-js"></i></div>
+                            <h4>jQuery (Legacy)</h4>
+                            <ul>
+                                <li>Simplifie la manipulation DOM</li>
+                                <li>Gestion des événements</li>
+                                <li>Animations</li>
+                                <li>AJAX simplifié</li>
+                                <li>Moins utilisé dans les nouveaux projets</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="projets" class="advanced-section">
+                    <h3><i class="fas fa-laptop-code"></i> Projets Pratiques</h3>
+                    
+                    <div class="advanced-FLEX">
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fas fa-tasks"></i></div>
+                            <h4>Todo App</h4>
+                            <p>Application de gestion de tâches avec:</p>
+                            <ul>
+                                <li>Ajout/suppression de tâches</li>
+                                <li>Marquage comme complété</li>
+                                <li>Filtrage (tous/actifs/complétés)</li>
+                                <li>Persistance avec localStorage</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fas fa-cloud"></i></div>
+                            <h4>API Integration</h4>
+                            <p>Application météo utilisant:</p>
+                            <ul>
+                                <li>API OpenWeatherMap</li>
+                                <li>Géolocalisation du navigateur</li>
+                                <li>Affichage des prévisions sur 5 jours</li>
+                                <li>Recherche par ville</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fas fa-gamepad"></i></div>
+                            <h4>Mini-jeux</h4>
+                            <p>Développez des jeux classiques:</p>
+                            <ul>
+                                <li>Snake: Canvas, collisions, gestion du score</li>
+                                <li>Memory: Gestion des paires, temporisateur</li>
+                                <li>Quiz: Questions aléatoires, compteur de points</li>
+                                <li>Calculatrice: Opérations complexes, historique</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="advanced-card">
+                            <div class="card-icon"><i class="fas fa-shopping-cart"></i></div>
+                            <h4>E-commerce</h4>
+                            <p>Panier d'achat avec:</p>
+                            <ul>
+                                <li>Liste de produits</li>
+                                <li>Ajout/retrait du panier</li>
+                                <li>Calcul du total</li>
+                                <li>Simulation de paiement</li>
+                                <li>Persistance du panier</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-example">
+                        <h4>Exemple: Mini Quiz</h4>
+                        <div id="quiz-container">
+                            <div id="quiz-question">Chargement des questions...</div>
+                            <div id="quiz-options" class="example-controls"></div>
+                            <div id="quiz-result" class="example-result"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Expressions Régulières -->
+            <section id="regex" class="section">
+                <h2>Expressions Régulières</h2>
+                <p>Les expressions régulières (regex) permettent de rechercher, valider et manipuler du texte :</p>
+                
+                <div class="code-block">
+                    <pre><code class="language-javascript">// Création d'une expression régulière
+const regex = /abc/i; // "abc" insensible à la casse
+
+// Test d'une chaîne
+console.log(regex.test("Abc")); // true
+console.log(regex.test("xyz")); // false
+
+// Recherche dans une chaîne
+const texte = "JavaScript est génial";
+const resultat = texte.match(/[a-zA-Z]+/g);
+console.log(resultat); // ["JavaScript", "est", "génial"]
+
+// Validation d'email
+function validerEmail(email) {
+  const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return regexEmail.test(email);
+}
+
+console.log(validerEmail("test@example.com")); // true
+console.log(validerEmail("test@ex")); // false</code></pre>
+                </div>
+                
+                <div class="important">
+                    <p><strong>Quelques motifs courants :</strong></p>
+                    <ul>
+                        <li><code>/\d/</code> - Chiffre</li>
+                        <li><code>/\w/</code> - Caractère alphanumérique</li>
+                        <li><code>/[a-z]/</code> - Lettre minuscule</li>
+                        <li><code>/^...$/</code> - Début et fin de chaîne</li>
+                        <li><code>/a+/</code> - Un ou plusieurs 'a'</li>
+                        <li><code>/a*/</code> - Zéro ou plusieurs 'a'</li>
+                        <li><code>/a?/</code> - Zéro ou un 'a'</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Manipulation du DOM -->
+            <section id="dom" class="section">
+                <h2>Manipulation du DOM</h2>
+                <p>Le DOM (Document Object Model) représente la structure d'une page HTML :</p>
+                
+                <div class="code-block">
+                    <pre><code class="language-javascript">// Sélection d'éléments
+const titre = document.getElementById("monTitre");
+const paragraphes = document.getElementsByClassName("para");
+const premierDiv = document.querySelector("div");
+const tousLiens = document.querySelectorAll("a");
+
+// Modification de contenu
+titre.textContent = "Nouveau titre";
+titre.innerHTML = "<em>Titre</em> en italique";
+
+// Modification de style
+titre.style.color = "blue";
+titre.style.fontSize = "24px";
+
+// Création d'éléments
+const nouveauParagraphe = document.createElement("p");
+nouveauParagraphe.textContent = "Ceci est un nouveau paragraphe";
+
+// Ajout au DOM
+document.body.appendChild(nouveauParagraphe);
+
+// Gestion d'événements
+const bouton = document.getElementById("monBouton");
+bouton.addEventListener("click", function() {
+  alert("Bouton cliqué !");
+});</code></pre>
+                </div>
+                
+                <div class="example">
+                    <div class="example-title">Exemple pratique :</div>
+                    <div class="code-block">
+                        <pre><code class="language-javascript">// Ajouter un nouvel élément de liste à une UL
+const liste = document.getElementById("maListe");
+const nouvelElement = document.createElement("li");
+nouvelElement.textContent = "Nouvel élément";
+liste.appendChild(nouvelElement);
+
+// Changer le style d'un élément au survol
+const elementsListe = document.querySelectorAll("#maListe li");
+elementsListe.forEach(li => {
+  li.addEventListener("mouseover", function() {
+    this.style.backgroundColor = "lightblue";
+  });
+  li.addEventListener("mouseout", function() {
+    this.style.backgroundColor = "";
+  });
+});</code></pre>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Formulaires -->
+            <section id="formulaires" class="section">
+                <h2>Manipulation de Formulaires</h2>
+                <p>JavaScript permet de valider et traiter les données de formulaires :</p>
+                
+                <div class="code-block">
+                    <pre><code class="language-javascript">// Accès aux éléments de formulaire
+const formulaire = document.getElementById("monFormulaire");
+const champNom = document.getElementById("nom");
+const champEmail = document.getElementById("email");
+
+// Validation lors de la soumission
+formulaire.addEventListener("submit", function(e) {
+  e.preventDefault(); // Empêche l'envoi du formulaire
+  
+  // Validation simple
+  if (champNom.value.trim() === "") {
+    alert("Veuillez entrer votre nom");
+    return;
+  }
+  
+  if (!validerEmail(champEmail.value)) {
+    alert("Email invalide");
+    return;
+  }
+  
+  // Traitement des données
+  const donnees = {
+    nom: champNom.value,
+    email: champEmail.value
+  };
+  
+  console.log("Données valides :", donnees);
+  // Ici, on pourrait envoyer les données à un serveur
+});
+
+// Fonction de validation d'email
+function validerEmail(email) {
+  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return regex.test(email);
+}</code></pre>
+                </div>
+                
+                <div class="tip">
+                    <p><strong>Bonnes pratiques :</strong></p>
+                    <ul>
+                        <li>Toujours valider côté serveur en plus du JavaScript</li>
+                        <li>Fournir des messages d'erreur clairs aux utilisateurs</li>
+                        <li>Empêcher l'envoi du formulaire avec <code>e.preventDefault()</code> jusqu'à ce que toutes les validations soient passées</li>
+                        <li>Utiliser des expressions régulières pour les formats complexes</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Bonnes Pratiques -->
+            <section id="bonnes-pratiques" class="section">
+                <h2>Bonnes Pratiques</h2>
+                <ul>
+                    <li>Toujours déclarer les variables avec <code>let</code> ou <code>const</code></li>
+                    <li>Utiliser des noms de variables significatifs</li>
+                    <li>Séparer le HTML, CSS et JavaScript</li>
+                    <li>Commenter votre code pour expliquer les parties complexes</li>
+                    <li>Utiliser des fonctions pour organiser votre code</li>
+                    <li>Tester régulièrement votre code</li>
+                    <li>Utiliser les outils de développement du navigateur</li>
+                    <li>Éviter les variables globales</li>
+                    <li>Utiliser les fonctions fléchées pour conserver le contexte <code>this</code></li>
+                    <li>Gérer les erreurs avec <code>try...catch</code></li>
+                </ul>
+                <div class="important">
+                    <p><strong>Ressources recommandées :</strong></p>
+                    <ul>
+                        <li><a href="https://developer.mozilla.org/" target="_blank">MDN Web Docs</a></li>
+                        <li><a href="https://javascript.info/" target="_blank">JavaScript.info</a></li>
+                        <li><a href="https://www.freecodecamp.org/" target="_blank">freeCodeCamp</a></li>
+                        <li><a href="https://www.codecademy.com/" target="_blank">Codecademy</a></li>
+                        <li><a href="https://eloquentjavascript.net/" target="_blank">Eloquent JavaScript (livre)</a></li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Formation JavaScript</h3>
+                <p>Un cours complet et professionnel pour maîtriser JavaScript, de ses bases aux concepts avancés.</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>ghizlaneelouakili7@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span> Maroc</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Liens Rapides</h3>
+                <ul class="footer-links">
+                    <li><a href="#bases"><i class="fas fa-arrow-right"></i> Bases de JavaScript</a></li>
+                    <li><a href="#fonctions"><i class="fas fa-arrow-right"></i> Fonctions</a></li>
+                    <li><a href="#objets"><i class="fas fa-arrow-right"></i> Objets</a></li>
+                    <li><a href="#tableaux"><i class="fas fa-arrow-right"></i> Tableaux</a></li>
+                    <li><a href="#avances"><i class="fas fa-arrow-right"></i> Concepts Avancés</a></li>
+                    <li><a href="#dom"><i class="fas fa-arrow-right"></i> DOM</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Ressources</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-arrow-right"></i> Exercices Pratiques</a></li>
+                    <li><a href="#"><i class="fas fa-arrow-right"></i> Projets JavaScript</a></li>
+                    <li><a href="#"><i class="fas fa-arrow-right"></i> Documentation</a></li>
+                    <li><a href="#"><i class="fas fa-arrow-right"></i> Communauté</a></li>
+                    <li><a href="#"><i class="fas fa-arrow-right"></i> FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Formation JavaScript Professionnel. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        // Initialisation de la coloration syntaxique
+        hljs.highlightAll();
+        
+        // Navigation fluide
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 120,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Mise à jour de la classe active
+                    document.querySelectorAll('.sidebar a').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+        
+        // Mise en surbrillance de la section en cours
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= sectionTop - 150) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            // Mise à jour du lien actif dans la sidebar
+            document.querySelectorAll('.sidebar a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Gestion des onglets
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                const tabContainer = button.closest('.advanced-section');
+                
+                // Désactiver tous les boutons du conteneur
+                tabContainer.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Activer le bouton cliqué
+                button.classList.add('active');
+                
+                // Désactiver tous les contenus du conteneur
+                tabContainer.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Activer le contenu correspondant
+                const content = tabContainer.querySelector(`#${tabId}-content`);
+                if (content) {
+                    content.classList.add('active');
+                }
+            });
+        });
+        
+        // Exemple asynchrone interactif
+        document.getElementById('fetchUsersBtn').addEventListener('click', async () => {
+            const resultElement = document.getElementById('asyncResult');
+            resultElement.innerHTML = '<div class="loading">Chargement en cours...</div>';
+            
+            try {
+                // Simuler un délai réseau
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // Données simulées
+                const users = [
+                    { id: 1, name: 'Alice', email: 'alice@example.com' },
+                    { id: 2, name: 'Bob', email: 'bob@example.com' },
+                    { id: 3, name: 'Charlie', email: 'charlie@example.com' }
+                ];
+                
+                // Afficher les résultats
+                resultElement.innerHTML = `
+                    <h4>Utilisateurs chargés :</h4>
+                    <ul>
+                        ${users.map(user => `<li>${user.name} - ${user.email}</li>`).join('')}
+                    </ul>
+                `;
+            } catch (error) {
+                resultElement.innerHTML = `<div class="error">Erreur: ${error.message}</div>`;
+            }
+        });
+        
+        document.getElementById('simulateErrorBtn').addEventListener('click', async () => {
+            const resultElement = document.getElementById('asyncResult');
+            resultElement.innerHTML = '<div class="loading">Tentative de chargement...</div>';
+            
+            try {
+                // Simuler un délai réseau
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // Simuler une erreur
+                throw new Error('Échec de la connexion au serveur');
+            } catch (error) {
+                resultElement.innerHTML = `
+                    <div class="error">
+                        <strong>Erreur:</strong> ${error.message}
+                        <p>Veuillez vérifier votre connexion et réessayer.</p>
+                    </div>
+                `;
+            }
+        });
+        
+        // Exemple de quiz interactif
+        const quizQuestions = [
+            {
+                question: "Quelle méthode utilise-t-on pour transformer un objet en chaîne JSON?",
+                options: ["JSON.parse()", "JSON.stringify()", "JSON.encode()", "JSON.toText()"],
+                answer: 1
+            },
+            {
+                question: "Quel mot-clé est utilisé pour déclarer une variable constante?",
+                options: ["let", "var", "const", "static"],
+                answer: 2
+            },
+            {
+                question: "Quelle fonction fléchée est correcte?",
+                options: [
+                    "const add = (a, b) => { a + b }",
+                    "const add = (a, b) => return a + b;",
+                    "const add = a, b => a + b",
+                    "const add = (a, b) => a + b"
+                ],
+                answer: 3
+            }
+        ];
+        
+        let currentQuestion = 0;
+        let score = 0;
+        
+        function renderQuestion() {
+            if (currentQuestion >= quizQuestions.length) {
+                document.getElementById('quiz-question').innerHTML = "Quiz terminé!";
+                document.getElementById('quiz-options').innerHTML = "";
+                document.getElementById('quiz-result').innerHTML = `
+                    Votre score: ${score}/${quizQuestions.length}
+                    <button class="example-btn" id="restartQuiz">Recommencer</button>
+                `;
+                document.getElementById('restartQuiz').addEventListener('click', () => {
+                    currentQuestion = 0;
+                    score = 0;
+                    renderQuestion();
+                });
+                return;
+            }
+            
+            const question = quizQuestions[currentQuestion];
+            document.getElementById('quiz-question').textContent = question.question;
+            
+            const optionsHtml = question.options.map((option, index) => 
+                `<button class="example-btn quiz-option" data-index="${index}">${option}</button>`
+            ).join('');
+            
+            document.getElementById('quiz-options').innerHTML = optionsHtml;
+            document.getElementById('quiz-result').innerHTML = "";
+            
+            document.querySelectorAll('.quiz-option').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const selectedIndex = parseInt(e.target.getAttribute('data-index'));
+                    if (selectedIndex === question.answer) {
+                        document.getElementById('quiz-result').innerHTML = 
+                            '<div class="success">Correct!</div>';
+                        score++;
+                    } else {
+                        document.getElementById('quiz-result').innerHTML = 
+                            `<div class="error">Incorrect! La bonne réponse est: ${question.options[question.answer]}</div>`;
+                    }
+                    
+                    setTimeout(() => {
+                        currentQuestion++;
+                        renderQuestion();
+                    }, 1500);
+                });
+            });
+        }
+        
+        // Initialiser le quiz
+        renderQuestion();
+    </script>
+</body>
+</html>
