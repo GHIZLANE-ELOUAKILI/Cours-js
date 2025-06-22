@@ -37,6 +37,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
         /* Header */
@@ -57,6 +58,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
    
 
@@ -140,6 +142,15 @@
             color: var(--accent);
         }
         
+        /* Hamburger menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+        }
 
         /* Main content */
         main {
@@ -218,10 +229,14 @@
         .section {
             margin-bottom: 3rem;
             scroll-margin-top: 140px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
 
-        .section:last-child {
-            margin-bottom: 0;
+        .section.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .section h2 {
@@ -458,46 +473,6 @@
             opacity: 0.8;
         }
 
-        /* Responsive */
-        @media (max-width: 900px) {
-            main {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                width: 100%;
-                position: relative;
-                top: 0;
-                height: auto;
-            }
-            
-            .header-container {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-            
-            .nav-links {
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .nav-links {
-                flex-direction: column;
-                align-items: center;
-                gap: 0.5rem;
-            }
-            
-            .content {
-                padding: 1.5rem;
-            }
-            
-            .footer-container {
-                flex-direction: column;
-            }
-        }
-
         /* Nouveaux styles pour les badges */
         .badge-container {
             display: flex;
@@ -561,19 +536,18 @@
         }
         
        .advanced-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-top: 1rem;
-}
-.advanced-FLEX{
-    
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .advanced-FLEX {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
             margin-top: 1rem;
-        
-}
+        }
         
         .advanced-card {
             background: white;
@@ -638,6 +612,211 @@
         .loading {
             color: #3498db;
         }
+        
+        /* Animations avancées */
+        @keyframes slideIn {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .slide-in {
+            animation: slideIn 0.8s ease-out forwards;
+        }
+        
+        .scale-hover {
+            transition: transform 0.3s ease;
+        }
+        
+        .scale-hover:hover {
+            transform: scale(1.03);
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(55, 77, 113, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(55, 77, 113, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(55, 77, 113, 0); }
+        }
+        
+        .card-highlight {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #374d71, #6c8bc7);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        
+        .card-highlight:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            main {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                position: relative;
+                top: 0;
+                height: auto;
+                margin-bottom: 2rem;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .nav-links {
+                justify-content: center;
+            }
+            
+            /* Ajout pour améliorer le responsive */
+            .content {
+                padding: 1.5rem;
+            }
+            
+            .section {
+                margin-bottom: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            h3 {
+                font-size: 1.3rem;
+            }
+            
+            .code-block {
+                padding: 1rem;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+                display: none;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .content {
+                padding: 1.2rem;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .footer-section {
+                min-width: 100%;
+            }
+            
+            /* Corrections pour les petits écrans */
+            .header-container {
+                padding: 0.8rem;
+            }
+            
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+            
+            .search button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            
+            /* Gestion des tableaux sur mobile */
+            .section table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .section table th, .section table td {
+                padding: 0.5rem 0.3rem;
+                font-size: 0.85rem;
+            }
+            
+            /* Amélioration des blocs interactifs */
+            .interactive-example {
+                padding: 1rem;
+            }
+            
+            .example-controls {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .example-btn {
+                width: 100%;
+                padding: 10px;
+            }
+            
+            /* Animation mobile */
+            .float-animation {
+                animation: float 4s ease-in-out infinite;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1rem;
+            }
+            
+            .logo i {
+                font-size: 1.2rem;
+            }
+            
+            .section h2 {
+                font-size: 1.4rem;
+            }
+            
+            .section h3 {
+                font-size: 1.2rem;
+            }
+            
+            .section table {
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -645,22 +824,24 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <i class="fas fa-code"></i>
+                <i class="fas fa-code float-animation"></i>
                 <h1>Formation JavaScript Professionnel</h1>
             </div>
              <div class="search">
-             <a href="connecter.html">
-        -    <button type="button">Se connecter</button>
-             </a>
-</div>
-
+                 <a href="se connecter.html">
+                     <button type="button" class="scale-hover">Se connecter</button>
+                 </a>
+            </div>
+            <button class="hamburger" id="hamburgerMenu">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </header>
 
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#bases"><i class="fas fa-book"></i> Bases de JS</a></li>
                 <li><a href="#fonctions"><i class="fas fa-cogs"></i> Fonctions</a></li>
                 <li><a href="#objets"><i class="fas fa-cube"></i> Objets</a></li>
@@ -749,7 +930,7 @@
         <!-- Content -->
         <div class="content">
             <!-- Introduction -->
-            <section id="introduction" class="section">
+            <section id="introduction" class="section slide-in">
                 <h2>Introduction à JavaScript</h2>
                 <p>JavaScript est un langage de programmation de scripts principalement employé dans les pages web interactives et à ce titre est une partie essentielle des applications web. Avec les technologies HTML et CSS, JavaScript est au cœur des langages utilisés par les développeurs web.</p>
                 
@@ -765,10 +946,16 @@
                     <li>Développer des jeux vidéo dans le navigateur</li>
                     <li>Automatiser des tâches répétitives</li>
                 </ul>
+                
+                <div class="advanced-card card-highlight scale-hover" style="margin-top: 20px;">
+                    <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                    <h4>Statistiques importantes</h4>
+                    <p>JavaScript est utilisé par plus de 97% des sites web côté client et est l'un des langages de programmation les plus populaires au monde.</p>
+                </div>
             </section>
 
             <!-- Les Bases de JavaScript -->
-            <section id="bases" class="section">
+            <section id="bases" class="section slide-in">
                 <h2>Les Bases de JavaScript</h2>
                 
                 <div id="insertion">
@@ -905,7 +1092,7 @@ var y = 10;</code></pre>
             </section>
             
             <!-- Opérateurs -->
-            <section id="operateurs" class="section">
+            <section id="operateurs" class="section slide-in">
                 <h2>Opérateurs en JavaScript</h2>
                 
                 <div id="arithmetiques">
@@ -1055,7 +1242,7 @@ console.log(statut); // "Majeur"</code></pre>
             </section>
             
             <!-- Structures de contrôle -->
-            <section id="controle" class="section">
+            <section id="controle" class="section slide-in">
                 <h2>Structures de Contrôle</h2>
                 
                 <div id="conditions">
@@ -1158,7 +1345,7 @@ console.log(`Bonjour ${nom}, vous avez ${age} ans.`);</code></pre>
             </section>
             
             <!-- Fonctions -->
-            <section id="fonctions" class="section">
+            <section id="fonctions" class="section slide-in">
                 <h2>Fonctions en JavaScript</h2>
                 
                 <div id="declaration">
@@ -1231,7 +1418,7 @@ const carres2 = nombres.map(n => n * n);</code></pre>
             </section>
             
             <!-- Objets -->
-            <section id="objets" class="section">
+            <section id="objets" class="section slide-in">
                 <h2>Objets en JavaScript</h2>
                 
                 <div id="creation">
@@ -1324,7 +1511,7 @@ console.log(berger.description()); // Max est un Berger Allemand</code></pre>
             </section>
             
             <!-- Tableaux -->
-            <section id="tableaux" class="section">
+            <section id="tableaux" class="section slide-in">
                 <h2>Tableaux en JavaScript</h2>
                 
                 <div id="declaration-tableau">
@@ -1444,7 +1631,7 @@ const total = produits
             </section>
             
             <!-- Concepts Avancés -->
-            <section id="avances" class="section">
+            <section id="avances" class="section slide-in">
                 <h2>Concepts Avancés en JavaScript</h2>
                 <p>Découvrez les fonctionnalités modernes et les concepts avancés qui font de JavaScript un langage puissant pour le développement web moderne.</p>
                 
@@ -1566,7 +1753,7 @@ const html = `
                     <p>JavaScript utilise des modèles asynchrones pour gérer les opérations longues sans bloquer l'exécution.</p>
                     
                     <div class="advanced-grid">
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fas fa-hourglass-half"></i></div>
                             <h4>Callbacks</h4>
                             <p>Fonctions passées en argument, exécutées après une opération.</p>
@@ -1583,7 +1770,7 @@ fetchData(data => {
                             </div>
                         </div>
                         
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fas fa-check-circle"></i></div>
                             <h4>Promesses</h4>
                             <p>Objets représentant une opération asynchrone et son résultat.</p>
@@ -1603,7 +1790,7 @@ fetchData()
                             </div>
                         </div>
                         
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fas fa-bolt"></i></div>
                             <h4>Async/Await</h4>
                             <p>Syntaxe moderne pour écrire du code asynchrone de manière synchrone.</p>
@@ -1623,7 +1810,7 @@ getData();</code></pre>
                         </div>
                     </div>
                     
-                    <div class="interactive-example">
+                    <div class="interactive-example pulse">
                         <h4>Exemple: Gestion de requêtes asynchrones</h4>
                         <div class="example-controls">
                             <button class="example-btn" id="fetchUsersBtn">Charger utilisateurs</button>
@@ -1716,7 +1903,7 @@ fetch('https://api.example.com/data')
                     <p>JavaScript utilise un modèle orienté objet basé sur les prototypes.</p>
                     
                     <div class="advanced-grid">
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fas fa-link"></i></div>
                             <h4>Prototypes</h4>
                             <p>Tous les objets JavaScript héritent de prototypes.</p>
@@ -1734,7 +1921,7 @@ console.log(alice.greet()); // Bonjour, je suis Alice</code></pre>
                             </div>
                         </div>
                         
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fas fa-project-diagram"></i></div>
                             <h4>Héritage</h4>
                             <p>Créez des hiérarchies de classes avec extends et super.</p>
@@ -1765,7 +1952,7 @@ console.log(rex.speak()); // Rex émet un son : Wouf Wouf!</code></pre>
                             </div>
                         </div>
                         
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fas fa-lock"></i></div>
                             <h4>Encapsulation</h4>
                             <p>Contrôlez l'accès aux propriétés avec les champs privés.</p>
@@ -1885,7 +2072,7 @@ console.log(getCookie('username')); // John</code></pre>
                     <h3><i class="fas fa-tools"></i> Outils & Bonnes Pratiques</h3>
                     
                     <div class="advanced-FLEX">
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fas fa-bug"></i></div>
                             <h4>Debugging</h4>
                             <ul>
@@ -1896,7 +2083,7 @@ console.log(getCookie('username')); // John</code></pre>
                             </ul>
                         </div>
                         
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fas fa-vial"></i></div>
                             <h4>Testing</h4>
                             <ul>
@@ -1907,7 +2094,7 @@ console.log(getCookie('username')); // John</code></pre>
                             </ul>
                         </div>
                         
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fas fa-tachometer-alt"></i></div>
                             <h4>Performance</h4>
                             <ul>
@@ -1919,7 +2106,7 @@ console.log(getCookie('username')); // John</code></pre>
                             </ul>
                         </div>
                         
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fas fa-broom"></i></div>
                             <h4>Clean Code</h4>
                             <ul>
@@ -1937,7 +2124,7 @@ console.log(getCookie('username')); // John</code></pre>
                     <h3><i class="fas fa-cubes"></i> Frameworks & Bibliothèques</h3>
                     
                     <div class="advanced-FLEX">
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fab fa-react"></i></div>
                             <h4>React</h4>
                             <ul>
@@ -1948,7 +2135,7 @@ console.log(getCookie('username')); // John</code></pre>
                             </ul>
                         </div>
                         
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fab fa-vuejs"></i></div>
                             <h4>Vue.js</h4>
                             <ul>
@@ -1959,7 +2146,7 @@ console.log(getCookie('username')); // John</code></pre>
                             </ul>
                         </div>
                         
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fab fa-angular"></i></div>
                             <h4>Angular</h4>
                             <ul>
@@ -1970,7 +2157,7 @@ console.log(getCookie('username')); // John</code></pre>
                             </ul>
                         </div>
                         
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fab fa-js"></i></div>
                             <h4>jQuery (Legacy)</h4>
                             <ul>
@@ -1988,7 +2175,7 @@ console.log(getCookie('username')); // John</code></pre>
                     <h3><i class="fas fa-laptop-code"></i> Projets Pratiques</h3>
                     
                     <div class="advanced-FLEX">
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fas fa-tasks"></i></div>
                             <h4>Todo App</h4>
                             <p>Application de gestion de tâches avec:</p>
@@ -2000,7 +2187,7 @@ console.log(getCookie('username')); // John</code></pre>
                             </ul>
                         </div>
                         
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fas fa-cloud"></i></div>
                             <h4>API Integration</h4>
                             <p>Application météo utilisant:</p>
@@ -2012,7 +2199,7 @@ console.log(getCookie('username')); // John</code></pre>
                             </ul>
                         </div>
                         
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fas fa-gamepad"></i></div>
                             <h4>Mini-jeux</h4>
                             <p>Développez des jeux classiques:</p>
@@ -2024,7 +2211,7 @@ console.log(getCookie('username')); // John</code></pre>
                             </ul>
                         </div>
                         
-                        <div class="advanced-card">
+                        <div class="advanced-card card-highlight scale-hover">
                             <div class="card-icon"><i class="fas fa-shopping-cart"></i></div>
                             <h4>E-commerce</h4>
                             <p>Panier d'achat avec:</p>
@@ -2038,7 +2225,7 @@ console.log(getCookie('username')); // John</code></pre>
                         </div>
                     </div>
                     
-                    <div class="interactive-example">
+                    <div class="interactive-example pulse">
                         <h4>Exemple: Mini Quiz</h4>
                         <div id="quiz-container">
                             <div id="quiz-question">Chargement des questions...</div>
@@ -2050,7 +2237,7 @@ console.log(getCookie('username')); // John</code></pre>
             </section>
             
             <!-- Expressions Régulières -->
-            <section id="regex" class="section">
+            <section id="regex" class="section slide-in">
                 <h2>Expressions Régulières</h2>
                 <p>Les expressions régulières (regex) permettent de rechercher, valider et manipuler du texte :</p>
                 
@@ -2092,7 +2279,7 @@ console.log(validerEmail("test@ex")); // false</code></pre>
             </section>
             
             <!-- Manipulation du DOM -->
-            <section id="dom" class="section">
+            <section id="dom" class="section slide-in">
                 <h2>Manipulation du DOM</h2>
                 <p>Le DOM (Document Object Model) représente la structure d'une page HTML :</p>
                 
@@ -2149,7 +2336,7 @@ elementsListe.forEach(li => {
             </section>
             
             <!-- Formulaires -->
-            <section id="formulaires" class="section">
+            <section id="formulaires" class="section slide-in">
                 <h2>Manipulation de Formulaires</h2>
                 <p>JavaScript permet de valider et traiter les données de formulaires :</p>
                 
@@ -2203,7 +2390,7 @@ function validerEmail(email) {
             </section>
             
             <!-- Bonnes Pratiques -->
-            <section id="bonnes-pratiques" class="section">
+            <section id="bonnes-pratiques" class="section slide-in">
                 <h2>Bonnes Pratiques</h2>
                 <ul>
                     <li>Toujours déclarer les variables avec <code>let</code> ou <code>const</code></li>
@@ -2283,6 +2470,14 @@ function validerEmail(email) {
         // Initialisation de la coloration syntaxique
         hljs.highlightAll();
         
+        // Menu hamburger pour mobile
+        const hamburger = document.getElementById('hamburgerMenu');
+        const navLinks = document.getElementById('navLinks');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
         // Navigation fluide
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -2302,9 +2497,31 @@ function validerEmail(email) {
                         link.classList.remove('active');
                     });
                     this.classList.add('active');
+                    
+                    // Fermer le menu hamburger sur mobile
+                    navLinks.classList.remove('active');
                 }
             });
         });
+        
+        // Animation des sections au défilement
+        function animateSections() {
+            const sections = document.querySelectorAll('.section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const windowHeight = window.innerHeight;
+                const scrollPosition = window.scrollY;
+                
+                if (scrollPosition > sectionTop - windowHeight + 100) {
+                    section.classList.add('active');
+                }
+            });
+        }
+        
+        // Initialiser les animations au chargement et au défilement
+        window.addEventListener('load', animateSections);
+        window.addEventListener('scroll', animateSections);
         
         // Mise en surbrillance de la section en cours
         window.addEventListener('scroll', () => {
@@ -2480,5 +2697,5 @@ function validerEmail(email) {
         // Initialiser le quiz
         renderQuestion();
     </script>
-</body>
+</body>  
 </html>
