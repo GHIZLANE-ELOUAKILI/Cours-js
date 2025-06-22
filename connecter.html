@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription au Cours - Formation Web</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e6f3ff 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+        }
+
+        .login-container {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(26, 54, 93, 0.08);
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 480px;
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1a365d 0%, #2c5282 100%);
+            border-radius: 16px 16px 0 0;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .login-header h1 {
+            color: #1a202c;
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        .login-header p {
+            color: #4a5568;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background: #ffffff;
+            color: #2d3748;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2c5282;
+            box-shadow: 0 0 0 3px rgba(44, 82, 130, 0.1);
+            background: #f8fafc;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #a0aec0;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #1a365d;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: #2c5282;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(26, 54, 93, 0.2);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .form-footer p {
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .form-footer a {
+            color: #2c5282;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-footer a:hover {
+            color: #1a365d;
+            text-decoration: underline;
+        }
+
+        /* Validation styles */
+        .form-group input:valid {
+            border-color: #38a169;
+        }
+
+        .form-group input:invalid:not(:focus):not(:placeholder-shown) {
+            border-color: #e53e3e;
+        }
+
+        /* Loading state */
+        .submit-btn.loading {
+            background: #4a5568;
+            cursor: not-allowed;
+        }
+
+        .submit-btn.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 640px) {
+            .login-container {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+
+            .login-header h1 {
+                font-size: 1.625rem;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                padding: 0.75rem;
+            }
+
+            .submit-btn {
+                padding: 0.875rem;
+            }
+        }
+
+        /* Animation d'entrée */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-container {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Focus visible pour l'accessibilité */
+        .form-group input:focus-visible,
+        .form-group textarea:focus-visible,
+        .submit-btn:focus-visible {
+            outline: 2px solid #2c5282;
+            outline-offset: 2px;
+        }
+
+        /* Amélioration du contraste */
+        .required {
+            color: #e53e3e;
+        }
+
+        .form-group.required label::after {
+            content: ' *';
+            color: #e53e3e;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1><i class="fas fa-user-plus"></i> Inscription au Cours</h1>
+            <p>Rejoignez notre formation professionnelle en développement web</p>
+        </div>
+
+        <form action="/submit" method="post" id="inscriptionForm">
+            <div class="form-group required">
+                <label for="prenom">Prénom</label>
+                <input 
+                    type="text" 
+                    id="prenom" 
+                    name="prenom" 
+                    required 
+                    placeholder="Votre prénom"
+                    autocomplete="given-name"
+                >
+            </div>
+
+            <div class="form-group required">
+                <label for="nom">Nom</label>
+                <input 
+                    type="text" 
+                    id="nom" 
+                    name="nom" 
+                    required 
+                    placeholder="Votre nom de famille"
+                    autocomplete="family-name"
+                >
+            </div>
+
+            <div class="form-group required">
+                <label for="email">Adresse email</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    required 
+                    placeholder="votre.email@exemple.com"
+                    autocomplete="email"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="sujet">Sujet d'intérêt</label>
+                <input 
+                    type="text" 
+                    id="sujet" 
+                    name="sujet" 
+                    placeholder="HTML, CSS, JavaScript..."
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message ou questions</label>
+                <textarea 
+                    id="message" 
+                    name="message" 
+                    placeholder="Parlez-nous de vos objectifs d'apprentissage..."
+                    rows="4"
+                ></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <i class="fas fa-paper-plane"></i>
+                Envoyer ma demande
+            </button>
+        </form>
+
+        <div class="form-footer">
+            <p>Déjà inscrit ? <a href="connexion.html">Connectez-vous ici</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('inscriptionForm');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // Validation en temps réel
+            const inputs = form.querySelectorAll('input[required]');
+            inputs.forEach(input => {
+                input.addEventListener('blur', validateField);
+                input.addEventListener('input', clearErrors);
+            });
+
+            function validateField(e) {
+                const field = e.target;
+                const value = field.value.trim();
+                
+                // Supprimer les messages d'erreur précédents
+                removeErrorMessage(field);
+                
+                if (!value) {
+                    showErrorMessage(field, 'Ce champ est obligatoire');
+                    return false;
+                }
+                
+                if (field.type === 'email' && !isValidEmail(value)) {
+                    showErrorMessage(field, 'Veuillez saisir une adresse email valide');
+                    return false;
+                }
+                
+                return true;
+            }
+
+            function clearErrors(e) {
+                removeErrorMessage(e.target);
+            }
+
+            function showErrorMessage(field, message) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.style.cssText = `
+                    color: #e53e3e;
+                    font-size: 0.875rem;
+                    margin-top: 0.25rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.25rem;
+                `;
+                errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+                
+                field.style.borderColor = '#e53e3e';
+                field.parentNode.appendChild(errorDiv);
+            }
+
+            function removeErrorMessage(field) {
+                const errorMessage = field.parentNode.querySelector('.error-message');
+                if (errorMessage) {
+                    errorMessage.remove();
+                    field.style.borderColor = '#e2e8f0';
+                }
+            }
+
+            function isValidEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+
+            // Soumission du formulaire
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Valider tous les champs obligatoires
+                let isValid = true;
+                inputs.forEach(input => {
+                    if (!validateField({ target: input })) {
+                        isValid = false;
+                    }
+                });
+
+                if (isValid) {
+                    // Simuler l'envoi
+                    submitBtn.classList.add('loading');
+                    submitBtn.innerHTML = '<i class="fas fa-spinner"></i> Envoi en cours...';
+                    submitBtn.disabled = true;
+
+                    setTimeout(() => {
+                        // Simulation de succès
+                        submitBtn.classList.remove('loading');
+                        submitBtn.innerHTML = '<i class="fas fa-check"></i> Demande envoyée !';
+                        submitBtn.style.background = '#38a169';
+                        
+                        // Afficher un message de succès
+                        showSuccessMessage();
+                        
+                        // Réinitialiser le formulaire après 3 secondes
+                        setTimeout(() => {
+                            form.reset();
+                            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Envoyer ma demande';
+                            submitBtn.style.background = '#1a365d';
+                            submitBtn.disabled = false;
+                        }, 3000);
+                    }, 2000);
+                }
+            });
+
+            function showSuccessMessage() {
+                const successDiv = document.createElement('div');
+                successDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #38a169;
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 12px rgba(56, 161, 105, 0.3);
+                    z-index: 1000;
+                    animation: slideInRight 0.3s ease;
+                `;
+                successDiv.innerHTML = '<i class="fas fa-check-circle"></i> Votre demande a été envoyée avec succès !';
+                
+                document.body.appendChild(successDiv);
+                
+                setTimeout(() => {
+                    successDiv.remove();
+                }, 4000);
+            }
+
+            // Animation CSS pour le message de succès
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideInRight {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
