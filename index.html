@@ -7,7 +7,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
     <style>
-        * {
+       
+           * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -40,7 +41,7 @@
             overflow-x: hidden;
         }
 
-        /* Header */
+        /* Header - Version stable */
         header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
@@ -59,27 +60,29 @@
             justify-content: space-between;
             align-items: center;
             position: relative;
+            min-height: 60px; /* Hauteur fixe pour éviter les changements */
         }
-   
 
         .search a {
             text-decoration: none;
         }
 
         .search button {
-            background-color: #54677e; /* Bleu professionnel */
+            background-color: #54677e;
             color: white;
             border: none;
             padding: 12px 24px;
             font-size: 16px;
-            border-radius: 10PX;
+            border-radius: 10px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            white-space: nowrap; /* Empêche le texte de se casser */
         }
 
         .search button:hover {
-            background-color: #094576; /* Bleu foncé au survol */
+            background-color: #094576;
         }
+
         .logo {
             display: flex;
             align-items: center;
@@ -95,7 +98,7 @@
             font-weight: 700;
         }
 
-        /* Navigation */
+        /* Navigation - Garde la même apparence */
         nav {
             background-color: white;
             padding: 1rem 0;
@@ -112,6 +115,8 @@
             display: flex;
             gap: 1.5rem;
             list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .nav-links li a {
@@ -121,6 +126,7 @@
             padding: 0.5rem 0;
             position: relative;
             transition: var(--transition);
+            white-space: nowrap;
         }
 
         .nav-links li a::after {
@@ -142,7 +148,7 @@
             color: var(--accent);
         }
         
-        /* Hamburger menu */
+        /* Hamburger menu - Simplifié */
         .hamburger {
             display: none;
             cursor: pointer;
@@ -152,7 +158,7 @@
             font-size: 1.5rem;
         }
 
-        /* Main content */
+        /* Main content - Layout stable */
         main {
             flex: 1;
             display: flex;
@@ -160,11 +166,13 @@
             margin: 2rem auto;
             padding: 0 2rem;
             gap: 2rem;
+            width: 100%;
         }
 
-        /* Sidebar */
+        /* Sidebar - Responsive mais stable */
         .sidebar {
             width: 280px;
+            min-width: 280px;
             position: sticky;
             top: 140px;
             height: calc(100vh - 160px);
@@ -217,7 +225,7 @@
             border-left: 2px solid var(--light-gray);
         }
 
-        /* Content */
+        /* Content - Design uniforme */
         .content {
             flex: 1;
             background-color: white;
@@ -473,7 +481,7 @@
             opacity: 0.8;
         }
 
-        /* Nouveaux styles pour les badges */
+        /* Styles avancés - conservés sans changement */
         .badge-container {
             display: flex;
             flex-wrap: wrap;
@@ -481,7 +489,6 @@
             margin: 1rem 0;
         }
         
-        /* Animation pour les exemples interactifs */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -526,7 +533,6 @@
             min-height: 50px;
         }
         
-        /* Styles pour les sections avancées */
         .advanced-section {
             background: linear-gradient(to right, #f8fafc, #f0f9ff);
             border-radius: 8px;
@@ -535,7 +541,7 @@
             border-left: 4px solid #1f1537;
         }
         
-       .advanced-grid {
+        .advanced-grid {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
@@ -568,7 +574,6 @@
             margin-bottom: 1rem;
         }
         
-        /* Nouveau style pour les onglets */
         .tabs {
             display: flex;
             gap: 0.5rem;
@@ -613,7 +618,6 @@
             color: #3498db;
         }
         
-        /* Animations avancées */
         @keyframes slideIn {
             from { transform: translateX(-50px); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
@@ -673,71 +677,96 @@
             transform: scaleX(1);
         }
 
-        /* Responsive */
+        /* RESPONSIVE OPTIMISÉ - Transitions douces */
+        
+        /* Tablettes et écrans moyens */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 250px;
+                min-width: 250px;
+            }
+            
+            main {
+                padding: 0 1.5rem;
+            }
+        }
+
+        /* Tablettes portrait */
         @media (max-width: 900px) {
             main {
                 flex-direction: column;
+                gap: 1.5rem;
             }
             
             .sidebar {
                 width: 100%;
+                min-width: auto;
                 position: relative;
                 top: 0;
                 height: auto;
-                margin-bottom: 2rem;
+                margin-bottom: 0;
+                order: 2; /* Place la sidebar après le contenu */
             }
             
+            .content {
+                order: 1; /* Place le contenu en premier */
+            }
+            
+            /* Header reste stable */
             .header-container {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
+                padding: 0 1.5rem;
             }
             
             .nav-links {
-                justify-content: center;
+                gap: 1rem;
+            }
+        }
+
+        /* Smartphones */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1rem;
             }
             
-            /* Ajout pour améliorer le responsive */
+            .search button {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+            
+            .logo h1 {
+                font-size: 1.3rem;
+            }
+            
+            .logo i {
+                font-size: 1.5rem;
+            }
+            
+            .content {
+                padding: 2rem;
+            }
+            
+            .section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .section h3 {
+                font-size: 1.3rem;
+            }
+            
+            .nav-links {
+                gap: 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Petits smartphones */
+        @media (max-width: 600px) {
             .content {
                 padding: 1.5rem;
             }
             
             .section {
                 margin-bottom: 2rem;
-            }
-            
-            h2 {
-                font-size: 1.6rem;
-            }
-            
-            h3 {
-                font-size: 1.3rem;
-            }
-            
-            .code-block {
-                padding: 1rem;
-                font-size: 14px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .nav-links {
-                flex-direction: column;
-                align-items: center;
-                gap: 0.5rem;
-                display: none;
-            }
-            
-            .nav-links.active {
-                display: flex;
-            }
-            
-            .hamburger {
-                display: block;
-            }
-            
-            .content {
-                padding: 1.2rem;
             }
             
             .footer-container {
@@ -749,60 +778,61 @@
                 min-width: 100%;
             }
             
-            /* Corrections pour les petits écrans */
-            .header-container {
-                padding: 0.8rem;
-            }
-            
-            .logo h1 {
-                font-size: 1.2rem;
-            }
-            
-            .search button {
-                padding: 8px 16px;
-                font-size: 14px;
-            }
-            
-            /* Gestion des tableaux sur mobile */
+            /* Tables responsive sans changement de layout */
             .section table {
-                display: block;
+                font-size: 0.9rem;
                 overflow-x: auto;
+                display: block;
                 white-space: nowrap;
             }
             
-            .section table th, .section table td {
-                padding: 0.5rem 0.3rem;
-                font-size: 0.85rem;
+            .section table thead, 
+            .section table tbody, 
+            .section table tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed;
             }
             
-            /* Amélioration des blocs interactifs */
-            .interactive-example {
-                padding: 1rem;
+            .section table th, 
+            .section table td {
+                padding: 0.5rem 0.5rem;
             }
             
-            .example-controls {
-                flex-direction: column;
+            /* Navigation mobile simplifiée */
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
                 gap: 0.5rem;
             }
             
-            .example-btn {
-                width: 100%;
-                padding: 10px;
-            }
-            
-            /* Animation mobile */
-            .float-animation {
-                animation: float 4s ease-in-out infinite;
+            .nav-links li a {
+                font-size: 0.85rem;
+                padding: 0.4rem 0;
             }
         }
-        
+
+        /* Très petits écrans */
         @media (max-width: 480px) {
+            .header-container {
+                padding: 0 0.8rem;
+            }
+            
             .logo h1 {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
             
             .logo i {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
+            }
+            
+            .search button {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+            
+            .content {
+                padding: 1.2rem;
             }
             
             .section h2 {
@@ -813,8 +843,21 @@
                 font-size: 1.2rem;
             }
             
-            .section table {
-                font-size: 0.8rem;
+            .code-block {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+            
+            /* Évite les changements de layout sur très petits écrans */
+            .nav-container {
+                padding: 0 0.8rem;
+            }
+        }
+
+        /* Force le viewport meta tag */
+        @media screen and (max-width: 320px) {
+            body {
+                min-width: 320px;
             }
         }
     </style>
